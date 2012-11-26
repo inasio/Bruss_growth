@@ -1,0 +1,2 @@
+dump.o dump.dep: dump.cpp include/BM.h include/types.h include/real.h \
+  include/globals.h include/dump.h include/memory.h

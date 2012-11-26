@@ -1,0 +1,28 @@
+This directory contains the earlier, C, version for reading computational
+data out via OpenGL graphics - into a Glut window, no GUI control. 
+
+To use: 
+    ./displayer resultsdirectoryname dumpnumber
+
+For example:
+
+  ./displayer ~/comp_3904_code/numcrunch/demodata 0
+
+Will pull up the first dump (time = 0) of the demo results. Put in 
+a 5 instead of the 0, and you get the computation at 
+time = 2500 iterations. (This computation ran to 36,500 iterations, but 
+makes a dump directory of 26 MB - too big for floppy distribution!)
+
+Programs:
+
+display.c - is the heart of it all. The other programs are somewhat
+            peripheral bookeeping, and are similar to their versions
+            in /numcrunch. Display.c is a mix of straight C code for
+            undumping data from file, defining the graphics primitives
+            (triangles) from this, initializing OpenGL and the Glut
+            output window, and rendering. There is also a working
+            function for Postscript output of the bitmap, and some non-working
+            functions for other formats. 
+
+David Holloway
+Sept. 12, 2003

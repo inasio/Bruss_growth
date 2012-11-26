@@ -1,0 +1,4 @@
+glowTextData.o glowTextData.dep: /usr/glow_src/glowTextData.cpp /usr/glow_src/glowHeader.h \
+  /usr/glow_src/glowTextData.h /usr/glow_src/glowAux.h \
+  /usr/glow_src/glowAux.inl.h /usr/glow_src/glowDebug.h \
+  /usr/glow_src/glowTextData.inl.h

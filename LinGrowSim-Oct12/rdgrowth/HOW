@@ -1,0 +1,27 @@
+setenv SRD_Dx  0.00035
+setenv SRD_Dy  0.007
+setenv SRD_Da  1e-14
+setenv SRD_a  0.01
+setenv SRD_b  1.5
+setenv SRD_c  1.8
+setenv SRD_d  0.07
+setenv SRD_initA  8
+setenv SRD_B  1
+setenv SRD_Kp  18
+setenv SRD_Su  1
+setenv SRD_Kd  0.15
+setenv SRD_radius  0.25
+setenv SRD_delta_t  0.05
+setenv SRD_endtime  10000
+setenv SRD_pic_freq  250
+setenv SRD_Area_Growth 0.001
+setenv SRD_moves_per_growth_step 1
+setenv SRD_growth_frequency 10
+setenv SRD_length_tolerance 2
+setenv SRD_random_seed 237
+setenv SRD_triangulation  ../disk_triangulate/T20
+# Run on host 'ash1'
+# on Wed Feb 11 11:33:01 2004
+
+# with command
+# ./growth_srd 

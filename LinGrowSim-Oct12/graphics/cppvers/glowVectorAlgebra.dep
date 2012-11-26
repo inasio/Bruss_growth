@@ -1,0 +1,3 @@
+glowVectorAlgebra.o glowVectorAlgebra.dep: /usr/glow_src/glowVectorAlgebra.cpp \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowVectorAlgebra.h \
+  /usr/glow_src/glowVectorAlgebra.inl.h /usr/glow_src/glowDebug.h

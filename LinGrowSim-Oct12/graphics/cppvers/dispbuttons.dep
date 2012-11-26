@@ -1,0 +1,29 @@
+dispbuttons.o dispbuttons.dep: dispbuttons.cpp /usr/glow_src/glowViewTransform.h \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowVectorAlgebra.h \
+  /usr/glow_src/glowVectorAlgebra.inl.h /usr/glow_src/glowDebug.h \
+  /usr/glow_src/glow.h /usr/glow_src/glowSenderReceiver.h \
+  /usr/glow_src/glowSenderReceiver.inl.h /usr/glow_src/glow.inl.h \
+  /usr/glow_src/glowAux.h /usr/glow_src/glowAux.inl.h \
+  /usr/glow_src/glowViewTransform.inl.h include/dispbuttons.h \
+  /usr/glow_src/glowQuickPalette.h /usr/glow_src/glowWidget.h \
+  /usr/glow_src/glowUtilities.h /usr/glow_src/glowUtilities.inl.h \
+  /usr/glow_src/glowWidget.inl.h /usr/glow_src/glowCheckBoxWidget.h \
+  /usr/glow_src/glowCheckBoxWidget.inl.h /usr/glow_src/glowPanelWidget.h \
+  /usr/glow_src/glowPanelWidget.inl.h /usr/glow_src/glowLabelWidget.h \
+  /usr/glow_src/glowLabelWidget.inl.h \
+  /usr/glow_src/glowMenuButtonWidget.h \
+  /usr/glow_src/glowMenuButtonWidget.inl.h \
+  /usr/glow_src/glowPushButtonWidget.h \
+  /usr/glow_src/glowPushButtonWidget.inl.h \
+  /usr/glow_src/glowRadioButtonWidget.h \
+  /usr/glow_src/glowRadioButtonWidget.inl.h \
+  /usr/glow_src/glowScrollBarWidget.h \
+  /usr/glow_src/glowScrollBarWidget.inl.h \
+  /usr/glow_src/glowSeparatorWidget.h \
+  /usr/glow_src/glowSeparatorWidget.inl.h \
+  /usr/glow_src/glowSliderWidget.h /usr/glow_src/glowSliderWidget.inl.h \
+  /usr/glow_src/glowTextFieldWidget.h /usr/glow_src/glowTextData.h \
+  /usr/glow_src/glowTextData.inl.h \
+  /usr/glow_src/glowTextFieldWidget.inl.h \
+  /usr/glow_src/glowQuickPalette.inl.h include/types.h include/real.h \
+  include/display.h include/globals.h include/mandelgizmo.h

@@ -1,0 +1,3 @@
+glowAux.o glowAux.dep: /usr/glow_src/glowAux.cpp /usr/glow_src/glowHeader.h \
+  /usr/glow_src/glowAux.h /usr/glow_src/glowAux.inl.h \
+  /usr/glow_src/glowDebug.h

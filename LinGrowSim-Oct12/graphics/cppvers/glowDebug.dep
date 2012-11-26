@@ -1,0 +1,2 @@
+glowDebug.o glowDebug.dep: /usr/glow_src/glowDebug.cpp /usr/glow_src/glowHeader.h \
+  /usr/glow_src/glowDebug.h

@@ -1,0 +1,8 @@
+glowViewTransform.o glowViewTransform.dep: /usr/glow_src/glowViewTransform.cpp \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowDebug.h \
+  /usr/glow_src/glowViewTransform.h /usr/glow_src/glowVectorAlgebra.h \
+  /usr/glow_src/glowVectorAlgebra.inl.h /usr/glow_src/glow.h \
+  /usr/glow_src/glowSenderReceiver.h \
+  /usr/glow_src/glowSenderReceiver.inl.h /usr/glow_src/glow.inl.h \
+  /usr/glow_src/glowAux.h /usr/glow_src/glowAux.inl.h \
+  /usr/glow_src/glowViewTransform.inl.h

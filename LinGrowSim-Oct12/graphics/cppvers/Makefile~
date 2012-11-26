@@ -1,0 +1,64 @@
+PROG = disp_buttons
+
+SRCDIR=.
+
+GLOWDIR=/usr/glow_src
+
+MODULES=\
+        dispbuttons \
+        main  \
+        display \
+	memory \
+	dump \
+	triangle \
+        mandelgizmo 
+
+GLOWMODULES=\
+	glow \
+	glowAux \
+        glowCheckBoxWidget \
+	glowDebug \
+	glowLabelWidget \
+	glowMenuButtonWidget \
+	glowPanelWidget \
+	glowPushButtonWidget \
+	glowQuickPalette \
+        glowRadioButtonWidget \
+        glowScrollBarWidget \
+	glowSenderReceiver \
+	glowSeparatorWidget \
+        glowSliderWidget \
+	glowTextData \
+	glowTextFieldWidget \
+        glowTextFieldWindow \
+	glowUtilities \
+	glowVectorAlgebra \
+	glowViewTransform \
+	glowWidget
+
+COMPILE=gcc
+
+SHELL=/bin/sh
+
+LIBS=-lglut -lpthread -lGL -lGLU -lXi -lXmu -lX11 -lm -lstdc++
+
+
+DEPFLAGS=-MM
+
+BRUSSELDIR = ./
+INCDIR = $(BRUSSELDIR)include/
+
+CFLAGS=-Wall \
+	-DGLOW_PLATFORM_LINUX \
+	-DGLOW_PLATFORM_LITTLEENDIAN -I$(INCDIR) 
+
+NODEBUGCFLAGS=-O2 -DNODEBUG
+LDFLAGS=-L/usr/X11R6/lib
+
+
+include $(GLOWDIR)/glow_base.Makefile
+
+
+
+
+

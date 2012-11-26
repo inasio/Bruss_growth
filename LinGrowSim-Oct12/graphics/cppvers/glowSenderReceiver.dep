@@ -1,0 +1,3 @@
+glowSenderReceiver.o glowSenderReceiver.dep: /usr/glow_src/glowSenderReceiver.cpp \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowSenderReceiver.h \
+  /usr/glow_src/glowSenderReceiver.inl.h /usr/glow_src/glowDebug.h

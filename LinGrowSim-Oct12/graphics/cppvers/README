@@ -1,0 +1,65 @@
+This directory contains the code for the full C++, GUI version of the
+graphics (see ../cvers for the earlier C version). I expect this
+code will be the hardest to port to Windows, but it could 
+theoretically go quite smoothly. 
+
+To run:
+
+./disp_buttons resultsdirectoryname dumpnumber
+
+e.g. 
+ 
+./disp_buttons ~/comp_3904_code/numcrunch/demodata 0
+
+The control window is written with the GLOW toolkit (there is no GUI/
+button interface with OpenGL) - the reason the code in this directory
+is C++ (though much of the old graphics is 99% C). Two windows take
+graphical output: the Glut window, which responds automatically to 
+button pushes in the control window; and the 1st Glow window, which allows
+for object rotation with mouse drags, but needs a window tap to update
+values from the control window (*bug* - if this is fixed, we could
+get rid of the Glut window). 
+
+I chose GLOW for the GUI 1) because it seems it may be becoming a bit of a
+standard in Linux applications (?), and 2) It is entirely based on OpenGL
+rendering - so it should theoretically port to Windows. I.e., GLOW 
+interfaces should look identical in Linux and in Windows. I'd prefer to 
+stick with the GLOW interface in Windows, but if it seems entirely 
+clunky to write in, or if the tools in, say, MS Vis. C/C++ are clearly 
+superior for the Windows application, we could go that way. 
+
+The programs:
+
+Makefile - this is sort of a front-end for the Glow Makefile 
+            (glow_base.Makefile) - which generates all kinds of
+             dependency files, etc. The main thing is to list
+              the location of GLOW, the necessary local source
+               programs, and the necessary Glow modules for 
+                the calls you're making. 
+ 
+main.cpp,
+memory.cpp,
+dump.cpp,
+triangle.cpp - Essentially the same as the copies in ../cvers
+
+display.cpp - 90% the same as the version in ../cvers, but it 
+               initiates Glow, instead of Glut (Glow starts Glut).
+
+dispbuttons.cpp - This codes the control window, and button control
+                   of the OpenGL coming out of display.cpp. This code
+                    is mostly Glow calls. 
+
+mandelgizmo.cpp - This is altered code from a Glow tutorial (lesson 5). 
+                  Using a real Glow window lets me use the
+                  GlowViewManipulator, which allows for mouse rotation
+                  of the graphics object. I haven't been able to get
+                  this window to refresh upon control window events, 
+                  though, so I've also kept the original Glut window
+                  open. 
+
+./include/mandelgizmo.h,
+./include/dispbuttons.h - Some important definitions here. 
+
+David Holloway
+Sept. 12, 2003
+

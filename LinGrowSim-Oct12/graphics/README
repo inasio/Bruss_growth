@@ -1,0 +1,11 @@
+This directory contains the graphics code. 
+
+/cvers - the C version. No GUI, outputs data into a Glut window, with
+          OpenGL graphics. This may be the starting place if a GUI
+           toolkit other than GLOW is chosen. 
+
+/cppvers - the C++ version. It's got to be C++ to incorporate the GLOW
+            GUI toolkit. 
+
+David Holloway
+Sept. 12, 2003

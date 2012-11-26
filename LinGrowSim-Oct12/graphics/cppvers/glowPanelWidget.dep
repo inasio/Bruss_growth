@@ -1,0 +1,9 @@
+glowPanelWidget.o glowPanelWidget.dep: /usr/glow_src/glowPanelWidget.cpp \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowPanelWidget.h \
+  /usr/glow_src/glowWidget.h /usr/glow_src/glow.h \
+  /usr/glow_src/glowSenderReceiver.h \
+  /usr/glow_src/glowSenderReceiver.inl.h /usr/glow_src/glowDebug.h \
+  /usr/glow_src/glow.inl.h /usr/glow_src/glowAux.h \
+  /usr/glow_src/glowAux.inl.h /usr/glow_src/glowUtilities.h \
+  /usr/glow_src/glowUtilities.inl.h /usr/glow_src/glowWidget.inl.h \
+  /usr/glow_src/glowPanelWidget.inl.h

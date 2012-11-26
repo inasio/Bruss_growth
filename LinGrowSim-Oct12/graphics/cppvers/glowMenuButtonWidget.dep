@@ -1,0 +1,10 @@
+glowMenuButtonWidget.o glowMenuButtonWidget.dep: /usr/glow_src/glowMenuButtonWidget.cpp \
+  /usr/glow_src/glowHeader.h /usr/glow_src/glowMenuButtonWidget.h \
+  /usr/glow_src/glowWidget.h /usr/glow_src/glow.h \
+  /usr/glow_src/glowSenderReceiver.h \
+  /usr/glow_src/glowSenderReceiver.inl.h /usr/glow_src/glowDebug.h \
+  /usr/glow_src/glow.inl.h /usr/glow_src/glowAux.h \
+  /usr/glow_src/glowAux.inl.h /usr/glow_src/glowUtilities.h \
+  /usr/glow_src/glowUtilities.inl.h /usr/glow_src/glowWidget.inl.h \
+  /usr/glow_src/glowLabelWidget.h /usr/glow_src/glowLabelWidget.inl.h \
+  /usr/glow_src/glowMenuButtonWidget.inl.h

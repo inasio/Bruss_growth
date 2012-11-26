@@ -1,0 +1,2 @@
+memory.o memory.dep: memory.cpp include/BM.h include/types.h include/real.h \
+  include/globals.h include/memory.h

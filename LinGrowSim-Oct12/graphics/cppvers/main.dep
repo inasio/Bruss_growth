@@ -1,0 +1,2 @@
+main.o main.dep: main.cpp include/BM.h include/types.h include/real.h \
+  include/globals.h include/display.h include/main.h

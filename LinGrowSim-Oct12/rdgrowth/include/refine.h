@@ -1,0 +1,28 @@
+extern short refine_if_necessary();
+extern void find_maximal_initial_length();
+short extend_marking_for();
+void extend_markings();
+short needs_to_be_marked();
+short mark_nodes();
+node *node_to_the_left();
+void replace_neighbour();
+void give_four_neighbours();
+void add_neighbours();
+void add_three_nodes();
+void add_two_nodes();
+void add_one_node();
+void add_one_triangle();
+short check_if_neighbours();
+void refine_for_node_with_neighbour();
+void refine_the_node();
+void refine_all_marked_nodes();
+void add_one_neighbour();
+void add_one_edge();
+void check_for_missing_edge();
+void add_missing_edges();
+void set_values_for_node();
+void set_degree_for_node();
+void set_new_values_for_nodes();
+void allocate_matrix_arrays_for_node();
+void set_matrix_arrays_for_changed_nodes();
+

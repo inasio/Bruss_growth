@@ -1,0 +1,2 @@
+triangle.o triangle.dep: triangle.cpp include/BM.h include/types.h include/real.h \
+  include/globals.h

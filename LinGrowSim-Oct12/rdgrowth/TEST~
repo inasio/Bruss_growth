@@ -1,0 +1,37 @@
+#! /bin/csh
+setenv SRD_Dx  0.005
+setenv SRD_Dy  0.1
+setenv SRD_Da  0.00000000000001
+setenv SRD_a  0.01
+setenv SRD_b  1.5
+setenv SRD_c  1.8
+setenv SRD_d  0.07
+setenv SRD_initA  8.0
+setenv SRD_B  1.0
+setenv SRD_Kp  18.0
+setenv SRD_Su 1.0
+setenv SRD_Kd 0.15
+setenv SRD_Xth 0.0
+setenv SRD_radius  0.25
+setenv SRD_delta_t  0.05
+setenv SRD_endtime 10000.0
+setenv SRD_pic_freq  100
+setenv SRD_Area_Growth 0.001
+setenv SRD_moves_per_growth_step 1
+setenv SRD_growth_frequency 10
+setenv SRD_growth_onset 5000
+setenv SRD_length_tolerance 2.0
+setenv SRD_random_seed 237
+setenv SRD_triangulation  ../disk_triangulate/T20
+setenv SRD_old_result_dir res091071
+setenv SRD_new_result_dir res1216
+setenv SRD_refinement_freq 10
+setenv SRD_pickuprun 0
+setenv SRD_undumpfilename dump192
+
+../disk_triangulate/triangulate 20 >! ../disk_triangulate/T20
+
+mkdir res091071
+make
+#cd  /home/david/3d/philtrans
+nohup ./growth_srd

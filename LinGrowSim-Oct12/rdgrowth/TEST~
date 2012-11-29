@@ -21,7 +21,7 @@ setenv SRD_moves_per_growth_step 1
 setenv SRD_growth_frequency 10
 setenv SRD_growth_onset 5000
 setenv SRD_length_tolerance 2.0
-setenv SRD_random_seed 237
+setenv SRD_random_seed 9 
 setenv SRD_triangulation  ../disk_triangulate/T20
 setenv SRD_old_result_dir res091071
 setenv SRD_new_result_dir res1216

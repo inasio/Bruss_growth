@@ -135,7 +135,7 @@ BEGIN
 		initial_node_array[i].degree = dd;
 
 
-           fprintf(save,"%d,%f,%f,%f\n",i,initial_node_array[i].x,initial_node_array[i].y,initial_node_array[i].z);
+           fprintf(save,"%ld,%f,%f,%f\n",i,initial_node_array[i].x,initial_node_array[i].y,initial_node_array[i].z);
 
 
 		fscanf(f, "%d", &neighbour);

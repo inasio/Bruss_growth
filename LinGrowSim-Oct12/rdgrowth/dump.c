@@ -31,11 +31,11 @@ BEGIN
 
       if(pickuprun==FALSE)
       {
-	sprintf(filename, "%s/dump%d", old_result_dir, dumpidcount);
+	sprintf(filename, "%s/dump%ld", old_result_dir, dumpidcount);
       }
       else
       {
-	sprintf(filename, "%s/dump%d", new_result_dir, dumpidcount);
+	sprintf(filename, "%s/dump%ld", new_result_dir, dumpidcount);
       }    
 	dumpidcount ++;
 	fprintf(stderr, "SRD_Growth[%d]: Dumping to file '%s'.", pid,filename);

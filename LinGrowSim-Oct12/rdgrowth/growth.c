@@ -447,7 +447,7 @@ BEGIN
         for(i=0;i<number_of_nodes;i++)     /*load up the varr array */
         {
            varr[i]=nl->entry;
-           fprintf(save,"%d,%d,%d\n",iterations,varr[i]->id,i);
+           fprintf(save,"%ld,%d,%d\n",iterations,varr[i]->id,i);
 	   /*           fprintf(stderr,"%d,%d,%d\n",iterations,varr[i]->id,i); */
            nl = nl->next;
 	}

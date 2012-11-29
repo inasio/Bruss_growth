@@ -57,7 +57,7 @@ BEGIN
 
              time(&present_time);
 
-             fprintf(stderr, "Iteration %5d, comp.time %4.5g; local time %s",
+             fprintf(stderr, "Iteration %5ld, comp.time %4.5g; local time %s",
                        iterations, (REAL) iterations*delta_t,
                         (char *)(ctime(&present_time)+11));
 

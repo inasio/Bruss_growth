@@ -212,31 +212,31 @@ BEGIN
 	Write all values of interest.
 	 *
 	 */
-	fprintf(f,"export SRD_Dx=%g\n", X_diffuse);
-	fprintf(f,"export SRD_Dy=%g\n", Y_diffuse);
-	fprintf(f,"export SRD_Da=%g\n", A_diffuse);
-	fprintf(f,"export SRD_a=%g\n", a);
-	fprintf(f,"export SRD_b=%g\n", b);
-	fprintf(f,"export SRD_c=%g\n", c);
-	fprintf(f,"export SRD_d=%g\n", d);
-	fprintf(f,"export SRD_initA=%g\n", initA);
-	fprintf(f,"export SRD_B=%g\n", B);
-	fprintf(f,"export SRD_Kp=%g\n", Kp);
-	fprintf(f,"export SRD_Su=%g\n", Su);
-	fprintf(f,"export SRD_Kd=%g\n", Kd);
-	fprintf(f,"export SRD_radius=%g\n", radius);
-	fprintf(f,"export SRD_delta_t=%g\n", delta_t);
-	fprintf(f,"export SRD_endtime=%g\n", endtime);
-	fprintf(f,"export SRD_pic_freq=%d\n", pic_freq);
+	fprintf(f,"setenv SRD_Dx  %g\n", X_diffuse);
+	fprintf(f,"setenv SRD_Dy  %g\n", Y_diffuse);
+	fprintf(f,"setenv SRD_Da  %g\n", A_diffuse);
+	fprintf(f,"setenv SRD_a  %g\n", a);
+	fprintf(f,"setenv SRD_b  %g\n", b);
+	fprintf(f,"setenv SRD_c  %g\n", c);
+	fprintf(f,"setenv SRD_d  %g\n", d);
+	fprintf(f,"setenv SRD_initA  %g\n", initA);
+	fprintf(f,"setenv SRD_B  %g\n", B);
+	fprintf(f,"setenv SRD_Kp  %g\n", Kp);
+	fprintf(f,"setenv SRD_Su  %g\n", Su);
+	fprintf(f,"setenv SRD_Kd  %g\n", Kd);
+	fprintf(f,"setenv SRD_radius  %g\n", radius);
+	fprintf(f,"setenv SRD_delta_t  %g\n", delta_t);
+	fprintf(f,"setenv SRD_endtime  %g\n", endtime);
+	fprintf(f,"setenv SRD_pic_freq  %d\n", pic_freq);
 
-	fprintf(f, "export SRD_Area_Growth=%g\n", area_growth_factor);
-	fprintf(f, "export SRD_moves_per_growth_step=%d\n", moves_per_growth_step);
-	fprintf(f, "export SRD_growth_frequency=%d\n", growth_frequency);
-	fprintf(f, "export SRD_length_tolerance=%g\n", length_tolerance);
-	fprintf(f, "export SRD_random_seed=%d\n", random_seed);
-	fprintf(f,"export SRD_triangulation=%s\n",
+	fprintf(f, "setenv SRD_Area_Growth %g\n", area_growth_factor);
+	fprintf(f, "setenv SRD_moves_per_growth_step %d\n", moves_per_growth_step);
+	fprintf(f, "setenv SRD_growth_frequency %d\n", growth_frequency);
+	fprintf(f, "setenv SRD_length_tolerance %g\n", length_tolerance);
+	fprintf(f, "setenv SRD_random_seed %d\n", random_seed);
+	fprintf(f,"setenv SRD_triangulation  %s\n",
 				triangulation_filename);
-/*	fprintf(f,"export SRD_result_dir  %s\n", result_dir); */
+/*	fprintf(f,"setenv SRD_result_dir  %s\n", result_dir); */
 
 	gethostname(hostname, 80);
 

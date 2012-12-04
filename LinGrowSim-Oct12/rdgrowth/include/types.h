@@ -11,8 +11,8 @@ typedef struct coeff_list_s coeff_list;
 
 
 struct node_s {
-	REAL 		x,y,z;	/* coordinates */
-	REAL		local_x, local_y;
+	double 		x,y,z;	/* coordinates */
+	double		local_x, local_y;
 
 	node_list 	*nl;    /* the nodes neighbours */
 
@@ -20,33 +20,33 @@ struct node_s {
 	short 		fixed;	/* flag indicating, whether node can be moved */
         short           conc_fixed;  /* flag indicating whether concentration can be changed */
 
-	REAL		X, Y, A;
-	REAL 		previous_X, previous_Y, previous_A;
+	double		X, Y, A;
+	double 		previous_X, previous_Y, previous_A;
 
 
 	coeff_list 	*Lapl_coeff_l;
-	REAL		Lapl_coeff;
+	double		Lapl_coeff;
 
 	coeff_list	*Area_coeff_l;
-	REAL		Area_coeff;
+	double		Area_coeff;
 
        coeff_list      *Matrix_coeff_l_X, *Matrix_coeff_l_Y, *Matrix_coeff_l_A;
-	REAL		Matrix_coeff_X, Matrix_coeff_Y, Matrix_coeff_A;
+	double		Matrix_coeff_X, Matrix_coeff_Y, Matrix_coeff_A;
 
 
-	REAL		solution_X, solution_Y, solution_A;
-	REAL 		rhs_X, rhs_Y, rhs_A;
+	double		solution_X, solution_Y, solution_A;
+	double 		rhs_X, rhs_Y, rhs_A;
 
-	REAL		*K_X, *K_Y, *K_A;
-	REAL		*Khat_X, *Khat_Y, *Khat_A;
-	REAL		*u_X, *u_Y, *u_A;
+	double		*K_X, *K_Y, *K_A;
+	double		*Khat_X, *Khat_Y, *Khat_A;
+	double		*u_X, *u_Y, *u_A;
 
-	REAL		tempREAL_X, tempREAL_Y, tempREAL_A;
+	double		tempdouble_X, tempdouble_Y, tempdouble_A;
 
-	REAL		BiCGSTAB_r, BiCGSTAB_p, BiCGSTAB_v, BiCGSTAB_s, BiCGSTAB_t, BiCGSTAB_phat,
+	double		BiCGSTAB_r, BiCGSTAB_p, BiCGSTAB_v, BiCGSTAB_s, BiCGSTAB_t, BiCGSTAB_phat,
 			BiCGSTAB_shat;
 
-	REAL		deltaX, deltaY, deltaA;
+	double		deltaX, deltaY, deltaA;
 
 #ifdef 	IDENTIFY_NODES_AND_TRIANGLES
 	int 		id;		 /* For identification! */
@@ -60,7 +60,7 @@ struct node_list_s {
 
 
 struct coeff_list_s {
-	REAL 		entry;
+	double 		entry;
 	coeff_list 	*next;
 };
 

@@ -86,14 +86,14 @@ BEGIN
 
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
-		REAL x,y,z;
+		double x,y,z;
 		node_list *nbl = n->nl;
 		x = n->x; y = n->y; z = n->z;
 
 		WHILE (nbl != NULL) DO
 			node *nb = nbl->entry;
-			REAL dx,dy,dz;
-			REAL distance;
+			double dx,dy,dz;
+			double distance;
 			dx = x-nb->x; dy = y-nb->y; dz = z-nb->z;
 
 			distance = dx*dx+dy*dy+dz*dz;
@@ -326,12 +326,12 @@ Returns:
 short needs_to_be_marked(node *n)
 BEGIN
 	node_list *nbl;
-	REAL x,y,z;
+	double x,y,z;
 	x = n->x; y = n->y; z = n->z;
 	nbl = n->nl;
 	WHILE (nbl != NULL) DO
 		node *nb = nbl->entry;
-		REAL dx, dy, dz;
+		double dx, dy, dz;
 		dx = x-nb->x; dy = y-nb->y; dz = z-nb->z;
 		IF (dx*dx+dy*dy+dz*dz > length_tolerance*max_initial_length_squared) THEN
 			return TRUE;
@@ -1402,13 +1402,13 @@ BEGIN
 
         FILE *save;
 	node_list *nl;
-	REAL sum_x = 0;
-	REAL sum_y = 0;
-	REAL sum_z = 0;
+	double sum_x = 0;
+	double sum_y = 0;
+	double sum_z = 0;
 
-	REAL sum_X = 0;
-	REAL sum_Y = 0;
-	REAL sum_A = 0;
+	double sum_X = 0;
+	double sum_Y = 0;
+	double sum_A = 0;
 
 	short n_count = 0;
 /*	short degree = 0; */

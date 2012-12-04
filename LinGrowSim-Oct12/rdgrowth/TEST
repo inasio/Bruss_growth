@@ -22,14 +22,14 @@ export SRD_growth_frequency=10
 export SRD_growth_onset=5000
 export SRD_length_tolerance=2.0
 export SRD_random_seed=9 
-export SRD_triangulation=../disk_triangulate/T20
+export SRD_triangulation=../disk_triangulate/T10
 export SRD_old_result_dir=res091071
 export SRD_new_result_dir=res1216
 export SRD_refinement_freq=10
 export SRD_pickuprun=0
 export SRD_undumpfilename=dump192
 
-../disk_triangulate/triangulate 20 >! ../disk_triangulate/T20
+../disk_triangulate/triangulate 10 >! ../disk_triangulate/T10
 
 mkdir res091071
 make

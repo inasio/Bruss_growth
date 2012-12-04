@@ -81,15 +81,15 @@ BEGIN
 	OD
 END
 
-REAL f_at_node (node *n)
+double f_at_node (node *n)
 BEGIN
-	REAL x,y,z,  R;
+	double x,y,z,  R;
 	x = n->x; y = n->y; z = n->z;
 	R = sqrt(x*x + y*y + z*z);
 	return ((x/R) * (y/R) * (z/R)); /* R never zero! */
 END
 
-REAL minimum_f;
+double minimum_f;
 void find_minimum_f()
 BEGIN
 	node_list *nl;
@@ -97,7 +97,7 @@ BEGIN
 	minimum_f = 1e4;
 	nl = first_nl;
 	WHILE (nl != NULL) DO
-		REAL f_node;
+		double f_node;
 		node *n = nl->entry;
 		n->X = f_node = f_at_node(n);
 		IF (f_node < minimum_f) THEN minimum_f = f_node; FI
@@ -107,8 +107,8 @@ END
 
 void initialize(node *n)
 BEGIN
-	REAL x = n->x,  y=n->y, z=n->z;
-	REAL rsquared = x*x + y*y;
+	double x = n->x,  y=n->y, z=n->z;
+	double rsquared = x*x + y*y;
 
 /* A prepatterns */
 

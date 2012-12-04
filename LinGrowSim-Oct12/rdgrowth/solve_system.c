@@ -12,8 +12,8 @@
 #define GIVE_ITERATIONS
 #define TRACE_CONVERGENCE
 
-REAL alpha, beta, rho, prev_rho, omega;
-REAL norm_b;
+double alpha, beta, rho, prev_rho, omega;
+double norm_b;
 
 /**************************** Functions for X ************************************/
 #define solution	solution_X
@@ -128,7 +128,7 @@ END
 void set_omega_to_tTs_over_tTt()
 BEGIN
 	node_list *nl;
-	REAL tTs, tTt;
+	double tTs, tTt;
 
 	tTs = 0.0;
 	tTt = 0.0;
@@ -170,10 +170,10 @@ BEGIN
 	OD
 END
 
-REAL BiCGSTABnorm_s()
+double BiCGSTABnorm_s()
 BEGIN
 	node_list *nl;
-	REAL norm = 0.0;
+	double norm = 0.0;
 
 	nl = first_nl;
 	WHILE (nl != NULL) DO

@@ -18,8 +18,8 @@ char triangulation_filename[L_strings];
 Function
 	read_the_real_parameter
 
-Function read_the_real_parameter takes a string argument and a pointer to a REAL.
-If the string is the name of an environment variable then the REAL pointed
+Function read_the_real_parameter takes a string argument and a pointer to a double.
+If the string is the name of an environment variable then the double pointed
 to is set to the value of the environment variable.
 
 If no such environment variable is defined, an error message is written.
@@ -30,7 +30,7 @@ Returns:
 	FALSE otherwise.
  *
  */
-short read_the_real_parameter(char *varname, REAL *parameter)
+short read_the_real_parameter(char *varname, double *parameter)
 BEGIN
 	char *env_string;
  	IF ((env_string = getenv(varname)) != NULL) THEN

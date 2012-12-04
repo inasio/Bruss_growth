@@ -2,10 +2,10 @@
 void set_norm_b()
 BEGIN
 	node_list *nl;
-	REAL sum = 0.0;
+	double sum = 0.0;
 	nl=first_nl;
 	WHILE(nl != NULL) DO
-		REAL bbb =nl->entry->rhs;
+		double bbb =nl->entry->rhs;
 		sum += bbb*bbb;
 		nl=nl->next;
 	OD
@@ -53,7 +53,7 @@ BEGIN
 	nl = first_nl;
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
-		REAL value;
+		double value;
 
 		coeff_list *cl = n->Matrix_coeff_l;
 		node_list *nbl = n->nl;
@@ -76,7 +76,7 @@ END
 void set_alpha_to_rho_over_bTv()
 BEGIN
 	node_list *nl;
-	REAL bTv;
+	double bTv;
 
 	nl = first_nl;
 	bTv = 0.0;
@@ -104,7 +104,7 @@ BEGIN
 	WHILE(nl != NULL) DO
 		node *n = nl->entry;
 		/* determine coefficients for equation Matrix_coeff * x + bn = sn */
-		REAL bn;
+		double bn;
 
 		coeff_list *cl = n->Matrix_coeff_l;
 		node_list *nbl = n->nl;
@@ -144,7 +144,7 @@ BEGIN
 	WHILE(nl != NULL) DO
 		node *n = nl->entry;
 		/* determine coefficients for equation Matrix_coeff * x + bn = pn */
-		REAL bn;
+		double bn;
 
 		coeff_list *cl = n->Matrix_coeff_l;
 		node_list *nbl = n->nl;
@@ -170,12 +170,12 @@ END
 short BiCGSTABconverged()
 BEGIN
 	node_list *nl;
-	REAL norm_Ax_minus_b;
+	double norm_Ax_minus_b;
 	nl = first_nl;
 	norm_Ax_minus_b = 0.0;
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
-		REAL value;
+		double value;
 
 		coeff_list *cl = n->Matrix_coeff_l;
 		node_list *nbl = n->nl;
@@ -233,7 +233,7 @@ BEGIN
 	nl = first_nl;
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
-		REAL value;
+		double value;
 
 		coeff_list *cl = n->Matrix_coeff_l;
 		node_list *nbl = n->nl;

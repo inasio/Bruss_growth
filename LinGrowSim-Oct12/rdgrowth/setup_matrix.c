@@ -10,14 +10,14 @@
 #include "display.h"
 
 struct vector {
-	REAL entry_x;
-	REAL entry_y;
-	REAL entry_z;
+	double entry_x;
+	double entry_y;
+	double entry_z;
 };
 
 void set_the_normal_vector (struct vector *v, node *n0, node *n1, node *n2)
 BEGIN
-	REAL 	ax,ay,az,
+	double 	ax,ay,az,
 		bx,by,bz,
 	        x0,x1,x2,
 		y0,y1,y2,
@@ -48,7 +48,7 @@ BEGIN
 	node *n1;
 	struct vector normal;
 	double N[3], X[3], Y[3];
-	REAL determinant;
+	double determinant;
 	double length;
 	short I;
 	/*  find the average of the normal vectors of the triangles the */
@@ -179,12 +179,12 @@ BEGIN
 END
 
 void add_to_coefficients(node *n, node *n1, node *n2,
-		         REAL *Lapl_c1, REAL *Lapl_c2,
-			 REAL *Area_c1, REAL *Area_c2)
+		         double *Lapl_c1, double *Lapl_c2,
+			 double *Area_c1, double *Area_c2)
 BEGIN
-	REAL y1,y2,x1,x2, delta_y, delta_x;
-	REAL triangle_area;
-	REAL area_factor;
+	double y1,y2,x1,x2, delta_y, delta_x;
+	double triangle_area;
+	double area_factor;
 
 	triangle_area = area_of_triangle(n,n1,n2);
 	area_factor  = 0.25 / triangle_area;
@@ -223,7 +223,7 @@ BEGIN
 	node_list *nl;
 
 	node *n1, *n2, *n0;
-	REAL *Lapl_c0, *Lapl_c1, *Lapl_c2,
+	double *Lapl_c0, *Lapl_c1, *Lapl_c2,
 	     *Area_c0, *Area_c1, *Area_c2;
 
        	change_to_local_coordinate_system(n);

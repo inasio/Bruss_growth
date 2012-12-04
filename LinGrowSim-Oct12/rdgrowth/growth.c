@@ -39,9 +39,9 @@ Global variables
  *
  */
 
-REAL max_area_error;
-REAL max_height_moved;
-REAL max_node_distance;
+double max_area_error;
+double max_height_moved;
+double max_node_distance;
 
 /*
  *
@@ -50,15 +50,15 @@ Function
 Function normal_vector determines the coordinates of the normal vector
 to the triangle given by its node arguments.
 
-Arguments: three node pointers, three pointers to REAL
+Arguments: three node pointers, three pointers to double
 Returns: void
  *
  */
 
-void normal_vector(node *n0, node *n1, node *n2, REAL *vx, REAL *vy, REAL *vz)
+void normal_vector(node *n0, node *n1, node *n2, double *vx, double *vy, double *vz)
 BEGIN
-	REAL length, length1, length2, length3,  factor;
-	REAL vxV, vyV, vzV,  ax,ay,az,  bx,by,bz,  mx,my,mz,
+	double length, length1, length2, length3,  factor;
+	double vxV, vyV, vzV,  ax,ay,az,  bx,by,bz,  mx,my,mz,
 	      x0,x1,x2, y0,y1,y2, z0,z1,z2, X_value;
 
 	x0 = n0->x; y0 = n0->y; z0 = n0->z;
@@ -100,15 +100,15 @@ and two node pointers. It calculates the area of the triangle
 with the two nodes as specified and a third node with cartesian coordinates
 as given.
 
-Arguments: 3 REALs, Two pointers to node
+Arguments: 3 doubles, Two pointers to node
 Returns: Area of triangle
  *
  */
 
-REAL area_of_lifted_triangle(REAL x1, REAL y1, REAL z1, node *n1, node *n2)
+double area_of_lifted_triangle(double x1, double y1, double z1, node *n1, node *n2)
 BEGIN
-	REAL x2, x3, y2, y3, z2, z3;
-       	REAL area, subterm;
+	double x2, x3, y2, y3, z2, z3;
+       	double area, subterm;
 
 	x2 = n1->x; y2 = n1->y; z2 = n1->z;
 	x3 = n2->x; y3 = n2->y; z3 = n2->z;
@@ -137,24 +137,24 @@ Function
 	area_of_element_with_lift
 
 Function area_of_element_with_lift takes as arguments one node pointer,
-three cartesian coordinates as REAL and one REAL "lift". It sums up
+three cartesian coordinates as double and one double "lift". It sums up
 the areas of the triangles in the neighbourhood of the node "n"
 when the node given  is moved from its
 position by lift*the vector n (vector n has entries nx,ny,nz))
 
-Arguments: one node pointer, four REAL
-Returns: REAL - the area.
+Arguments: one node pointer, four double
+Returns: double - the area.
  *
  */
 
-REAL area_of_element_with_lift(node *n, REAL nx, REAL ny, REAL nz, REAL lift)
+double area_of_element_with_lift(node *n, double nx, double ny, double nz, double lift)
 BEGIN
 	node_list *nl;
 	node *n1;
-	REAL area;
-	REAL node_lifted_x = n->x+lift*nx;
-	REAL node_lifted_y = n->y+lift*ny;
-	REAL node_lifted_z = n->z+lift*nz;
+	double area;
+	double node_lifted_x = n->x+lift*nx;
+	double node_lifted_y = n->y+lift*ny;
+	double node_lifted_z = n->z+lift*nz;
 
 	nl = n->nl;
 	n1 = nl->entry;
@@ -192,9 +192,9 @@ void set_average_normal_vector(node *n)
 BEGIN
 	node_list *nbl;
 	node *n1;
-	REAL vx,vy,vz;
-	REAL normal_x, normal_y, normal_z;
-	REAL  num_triangle;
+	double vx,vy,vz;
+	double normal_x, normal_y, normal_z;
+	double  num_triangle;
 
 	nbl = n -> nl;
 	n1 = nbl->entry;
@@ -261,16 +261,16 @@ void move_node (node *n)
 BEGIN
 	node_list *nbl;
 	node *n1;
-	REAL denominator_a, denominator_b, denominator_c;
-	REAL IV0, IV1, IV2;
-	REAL coeff_a, coeff_b, coeff_c;
-	REAL prescribed_area, rootarg;
-	REAL vx, vy, vz;
-	REAL length;
-	REAL normal_x, normal_y, normal_z;
-	REAL new_area, area_error;
+	double denominator_a, denominator_b, denominator_c;
+	double IV0, IV1, IV2;
+	double coeff_a, coeff_b, coeff_c;
+	double prescribed_area, rootarg;
+	double vx, vy, vz;
+	double length;
+	double normal_x, normal_y, normal_z;
+	double new_area, area_error;
 
-	REAL approximated_length;
+	double approximated_length;
 
 /*     fprintf(stderr,"growth 4.3.0\n"); */
 
@@ -654,7 +654,7 @@ fprintf(stderr, "\rGrowth %d ", i);
 				/*	      	       nl = first_nl;
 		       WHILE (nl != NULL) DO
 			 node *n=nl->entry;
-			 REAL dist;
+			 double dist;
                            move_node(n);
 			   n->x += n->deltax;
 			   n->y += n->deltay;

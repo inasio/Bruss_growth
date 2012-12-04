@@ -11,11 +11,11 @@
 
 
 extern char triangulation_filename[80];
-REAL initial_radius, center_height;
+double initial_radius, center_height;
 
-REAL lift(REAL x, REAL y)
+double lift(double x, double y)
 BEGIN
-	REAL rsquared = x*x + y*y;
+	double rsquared = x*x + y*y;
 
 	IF (rsquared > radius*radius) THEN
 		return(0.0);
@@ -68,10 +68,10 @@ BEGIN
 
 	FOR (i=0; i<number_of_nodes; i++) DO
 	        float x_coor, y_coor;
-		REAL rxcoor, rycoor;
+		double rxcoor, rycoor;
 		
-		REAL rr;
-		REAL correction_factor;
+		double rr;
+		double correction_factor;
 
 		fscanf(f, "%f", &x_coor);
 		fscanf(f, "%f", &y_coor);
@@ -83,8 +83,8 @@ BEGIN
 			correction_factor = 0.0;
 		FI
 
-		rxcoor = correction_factor* radius * (REAL) x_coor;
-		rycoor = correction_factor* radius * (REAL) y_coor;
+		rxcoor = correction_factor* radius * (double) x_coor;
+		rycoor = correction_factor* radius * (double) y_coor;
 		initial_node_array[i].x = rxcoor;
 		initial_node_array[i].y = rycoor;
 		initial_node_array[i].z = lift(rxcoor, rycoor);

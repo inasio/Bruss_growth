@@ -15,19 +15,19 @@
 #define gamma 0.78867513459481288227
 #define commentgamma  gamma is (3+sqrt(3)) / 6
 
-REAL imex_a[S][S] = {
+double imex_a[S][S] = {
 	{ gamma,		0.0},
 	{ 1.0-2.0*gamma,	gamma}
       };
 
-REAL imex_ahat[S+1][S+1] = {
+double imex_ahat[S+1][S+1] = {
 	{ 0.0,		0.0,		0.0},
 	{ gamma,	0.0,		0.0},
 	{ gamma,	2.0*(1.0-gamma), 0.0}
       };
 
-REAL imex_b[S]    = {0.5, 0.5};
-REAL imex_bhat[S+1] = {0.0, 0.5, 0.5};
+double imex_b[S]    = {0.5, 0.5};
+double imex_bhat[S+1] = {0.0, 0.5, 0.5};
 
 *****************************************************************************/
 /****************** third-order combination page 9/10 ****************/
@@ -36,47 +36,47 @@ REAL imex_bhat[S+1] = {0.0, 0.5, 0.5};
 
 #define a_ii_do_not_vary
 
-REAL imex_a[S][S] = {
+double imex_a[S][S] = {
 { 0.4358665215,		0.0,		0.0},
 { 0.2820667392,		0.4358665215,   0.0},
 { 1.208496649,	       -0.644363171,	0.4358665215} };
 
-REAL imex_ahat[S+1][S+1] = {
+double imex_ahat[S+1][S+1] = {
 { 0.0,			0.0,		0.0,		0.0},
 { 0.4358665215,		0.0,		0.0,		0.0},
 { 0.3212788860,		0.3966543747,	0.0,		0.0},
 { -0.105858296,		0.5529291479,	0.5529291479,	0.0}};
 
-REAL imex_b[S] = {1.208496649, -0.644363171, 0.4358665215};
-REAL imex_bhat[S+1] = {0.0, 1.208496649, -0.644363171, 0.4358665215};
+double imex_b[S] = {1.208496649, -0.644363171, 0.4358665215};
+double imex_bhat[S+1] = {0.0, 1.208496649, -0.644363171, 0.4358665215};
 /**********************************************************************/
 
 /* second order combination page 7 **********************************
 #define S 1
 #define a_ii_do_not_vary
 
-REAL imex_a[S][S] = { {0.5} };
-REAL imex_ahat[S+1][S+1] = {
+double imex_a[S][S] = { {0.5} };
+double imex_ahat[S+1][S+1] = {
 {0.0, 0.0},
 {0.5, 0.0}};
 
-REAL imex_b[S] = {1.0};
-REAL imex_bhat[S+1] = {0.0, 1.0};
+double imex_b[S] = {1.0};
+double imex_bhat[S+1] = {0.0, 1.0};
 ********************************************************************/
 
 void allocate_imex_arrays_for_node(node *n)
 BEGIN
-	n->K_X    = malloc( S * sizeof(REAL));
-	n->Khat_X = malloc( (S+1) * sizeof(REAL));
-	n->u_X    = malloc( S * sizeof(REAL));
+	n->K_X    = malloc( S * sizeof(double));
+	n->Khat_X = malloc( (S+1) * sizeof(double));
+	n->u_X    = malloc( S * sizeof(double));
 
-	n->K_Y    = malloc( S * sizeof(REAL));
-	n->Khat_Y = malloc( (S+1) * sizeof(REAL));
-        n->u_Y    = malloc( S * sizeof(REAL));
+	n->K_Y    = malloc( S * sizeof(double));
+	n->Khat_Y = malloc( (S+1) * sizeof(double));
+        n->u_Y    = malloc( S * sizeof(double));
 
-	n->K_A    = malloc( S * sizeof(REAL));
-	n->Khat_A = malloc( (S+1) * sizeof(REAL));
-        n->u_A    = malloc( S * sizeof(REAL));
+	n->K_A    = malloc( S * sizeof(double));
+	n->Khat_A = malloc( (S+1) * sizeof(double));
+        n->u_A    = malloc( S * sizeof(double));
 
 END
 
@@ -114,7 +114,7 @@ BEGIN
 
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
-		REAL X = n->previous_X,
+		double X = n->previous_X,
                      Y = n->previous_Y,
                      A = n->previous_A;
 
@@ -155,7 +155,7 @@ END
 void set_for_node_RK_matrix_coefficients_0(node *n)
 BEGIN
 	int i = 0;
-	REAL delta_t_a_ii = delta_t * imex_a[i][i];
+	double delta_t_a_ii = delta_t * imex_a[i][i];
 
 	coeff_list *Acl = n->Area_coeff_l;
 	coeff_list *Lcl = n->Lapl_coeff_l;
@@ -196,7 +196,7 @@ END
 void set_RK_matrix_coefficients(short i)
 BEGIN
 	node_list *nl;
-	REAL delta_t_a_ii;
+	double delta_t_a_ii;
 
 	nl = first_nl;
 	delta_t_a_ii = delta_t * imex_a[i][i];
@@ -234,7 +234,7 @@ BEGIN
 	/* First set right handside of linear system.*/
 
 	node_list *nl;
-	REAL delta_t_a_ii;
+	double delta_t_a_ii;
 
 /*        FILE *save;
 	  node_list *running_node; */
@@ -279,9 +279,9 @@ BEGIN
 		coeff_list *cl = n->Lapl_coeff_l;
 		node_list *nbl = n->nl;
 
-		REAL value_X = X_diffuse * n->Lapl_coeff * n->rhs_X;
-		REAL value_Y = Y_diffuse * n->Lapl_coeff * n->rhs_Y;
-		REAL value_A = A_diffuse * n->Lapl_coeff * n->rhs_A;
+		double value_X = X_diffuse * n->Lapl_coeff * n->rhs_X;
+		double value_Y = Y_diffuse * n->Lapl_coeff * n->rhs_Y;
+		double value_A = A_diffuse * n->Lapl_coeff * n->rhs_A;
 
  
 		WHILE (nbl != NULL) DO
@@ -292,9 +292,9 @@ BEGIN
 			nbl = nbl->next;
 			cl  = cl ->next;
 		OD
-		n->tempREAL_X = value_X;
-		n->tempREAL_Y = value_Y;
-		n->tempREAL_A = value_A;
+		n->tempdouble_X = value_X;
+		n->tempdouble_Y = value_Y;
+		n->tempdouble_A = value_A;
 
 		nl = nl->next;
  	OD
@@ -303,9 +303,9 @@ BEGIN
 	nl = first_nl;
 	WHILE(nl != NULL) DO
 		node *n = nl->entry;
-		n->rhs_X = n->tempREAL_X;
-		n->rhs_Y = n->tempREAL_Y;
-		n->rhs_A = n->tempREAL_A;
+		n->rhs_X = n->tempdouble_X;
+		n->rhs_Y = n->tempdouble_Y;
+		n->rhs_A = n->tempdouble_A;
 
 		nl = nl->next;
 	OD
@@ -378,7 +378,7 @@ BEGIN
 	nl = first_nl;
 	WHILE(nl != NULL) DO
 		node *n = nl -> entry;
-		REAL X = n->u_X[i],
+		double X = n->u_X[i],
                      Y = n->u_Y[i],
 	             A = n->u_A[i];
               if(!n->fixed)
@@ -494,7 +494,7 @@ END
 
 void reaction_diffusion(void)
 BEGIN
-	REAL t = t0 + iterations*delta_t;
+	double t = t0 + iterations*delta_t;
 	short i;
 
 	set_previous_values();
@@ -519,22 +519,22 @@ END
 **************************************************
 #define S 4
 
-REAL imex_a[S][S] = {
+double imex_a[S][S] = {
   { 0.5,	0.0,	0.0,	0.0},
   { 1.0/6.0,	0.5,	0.0,	0.0},
   { -0.5,	0.5,	0.5,	0.0},
   { 1.5,	-1.5,	0.5,	0.5}
 };
 
-REAL imex_ahat[S+1][S+1] = {
+double imex_ahat[S+1][S+1] = {
   { 0.0,	0.0,	0.0,	0.0,	0.0},
   { 0.5,	0.0,	0.0,	0.0,	0.0},
   { 11.0/18.0,	1.0/18.0, 0.0,	0.0,	0.0},
   { 5.0/6.0,	-5.0/6.0,	0.5,	0.0},
   { 0.25,	1.75,	0.75,	-0.75,  0.0}
 };
-REAL imex_b[S] = {1.5, -1.5, 0.5, 0.5};
-REAL imex_bhat[S+1] = {0.25, 1.75, 0.75, -1.75, 0.0};
+double imex_b[S] = {1.5, -1.5, 0.5, 0.5};
+double imex_bhat[S+1] = {0.25, 1.75, 0.75, -1.75, 0.0};
 ******************************************************************/
 
 

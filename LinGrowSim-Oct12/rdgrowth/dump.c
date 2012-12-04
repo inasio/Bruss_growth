@@ -84,7 +84,7 @@ BEGIN
 	WHILE (nl != NULL) DO
 		node *n = nl->entry;
 		node_list *nbl;
-		REAL x, y, z, X_val, Y_val, A_val;
+		double x, y, z, X_val, Y_val, A_val;
 
 		WRITE(n->degree, f);
 		WRITE(n->fixed, f);
@@ -169,7 +169,7 @@ BEGIN
 
 
 	FOR (i=0; i<number_of_nodes; i++) DO
-		REAL x,y,z, X_val, Y_val, A_val;
+		double x,y,z, X_val, Y_val, A_val;
 		node *n = &(initial_node_array[i]);
 		short j;
 

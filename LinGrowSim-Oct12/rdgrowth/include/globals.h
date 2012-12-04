@@ -21,46 +21,46 @@ GLOBAL  int		number_of_nodes;
 GLOBAL	int		random_seed;
 GLOBAL	int		pickuprun;
 
-GLOBAL	REAL		initA, B,
+GLOBAL	double		initA, B,
 			a,b,c,d,
                         Kp,Su,Kd,Xth;
-GLOBAL	REAL		X_diffuse, Y_diffuse, A_diffuse;
+GLOBAL	double		X_diffuse, Y_diffuse, A_diffuse;
 
-GLOBAL  REAL 		lambda;
-GLOBAL  REAL		delta_t, deltat, radius, t0;
-GLOBAL  REAL		time_start;
-GLOBAL  REAL            max_initial_length_squared;
-GLOBAL  REAL	        length_tolerance;
+GLOBAL  double 		lambda;
+GLOBAL  double		delta_t, deltat, radius, t0;
+GLOBAL  double		time_start;
+GLOBAL  double            max_initial_length_squared;
+GLOBAL  double	        length_tolerance;
 
 
-GLOBAL  REAL		area_growth_factor;
-GLOBAL  REAL		max_X_value, max_Y_value, max_A_value,
+GLOBAL  double		area_growth_factor;
+GLOBAL  double		max_X_value, max_Y_value, max_A_value,
 			min_X_value, min_Y_value, min_A_value, total_X,
 			total_relative_X, max_delta_X, min_X_value;
 
-GLOBAL  REAL		max_abs_error;
-GLOBAL  REAL		smoothing_factor;
+GLOBAL  double		max_abs_error;
+GLOBAL  double		smoothing_factor;
 
 GLOBAL int 		pic_freq;
 
-GLOBAL  REAL		growth_step_rate, area_growth_tolerance;
+GLOBAL  double		growth_step_rate, area_growth_tolerance;
 
-GLOBAL  REAL		area_growth_factor, vector_growth_factor;
+GLOBAL  double		area_growth_factor, vector_growth_factor;
 
-GLOBAL  REAL		growth_vector_length;
+GLOBAL  double		growth_vector_length;
 
-GLOBAL REAL radius;
+GLOBAL double radius;
 
-GLOBAL  REAL		endtime;
-GLOBAL  REAL		vector_growth_factor;
-GLOBAL  REAL 		Xthreshold;
+GLOBAL  double		endtime;
+GLOBAL  double		vector_growth_factor;
+GLOBAL  double 		Xthreshold;
 GLOBAL  int		moves_per_growth_step;
 GLOBAL  int		growth_frequency;
 GLOBAL  int 		refinement_frequency;
 GLOBAL  int             growth_onset;
 
-GLOBAL  REAL		k1, k2, k3, k4;
-GLOBAL  REAL		kcr, k1prime, k4prime;
+GLOBAL  double		k1, k2, k3, k4;
+GLOBAL  double		kcr, k1prime, k4prime;
 GLOBAL  short		turing_conditions_satisfied;
 
 

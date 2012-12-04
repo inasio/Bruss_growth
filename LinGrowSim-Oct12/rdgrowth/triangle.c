@@ -8,10 +8,10 @@
 
 
 
-REAL area_of_triangle (node *n0, node*n1, node*n2)
+double area_of_triangle (node *n0, node*n1, node*n2)
 BEGIN
-	REAL x1,x2,x3,y1,y2,y3,z1,z2,z3;
-       	REAL area, subterm;
+	double x1,x2,x3,y1,y2,y3,z1,z2,z3;
+       	double area, subterm;
 
 	x1 = n0->x; y1 = n0->y; z1 = n0->z;
 	x2 = n1->x; y2 = n1->y; z2 = n1->z;

@@ -29,7 +29,7 @@ BEGIN
 	time_t comp_start_time;
 	long start_iterations, end_iteration;
 	long refined;
-	REAL growth_time;
+	double growth_time;
         FILE *save;
         node_list *nl;
         int i;
@@ -47,7 +47,7 @@ BEGIN
 	WHILE( !user_stops_exe )
 	DO
 	     time_t present_time;
-	     REAL min_to_go;
+	     double min_to_go;
 
 
 	     IF (iterations * delta_t > endtime) THEN
@@ -58,7 +58,7 @@ BEGIN
              time(&present_time);
 
              fprintf(stderr, "Iteration %5ld, comp.time %4.5g; local time %s",
-                       iterations, (REAL) iterations*delta_t,
+                       iterations, (double) iterations*delta_t,
                         (char *)(ctime(&present_time)+11));
 
 		/*  Call Reaction-Diffusion every iteration */

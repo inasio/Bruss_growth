@@ -2,7 +2,7 @@
 #define REAL  double
 #endif
 
-/*#if REAL == float
+/*#if double == float
 #define cos fcos
 #define sin fsin
 #endif*/

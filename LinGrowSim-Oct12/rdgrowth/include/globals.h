@@ -52,7 +52,7 @@ GLOBAL  double		growth_vector_length;
 GLOBAL double radius;
 
 GLOBAL  double		endtime;
-GLOBAL  double		vector_growth_factor;
+// GLOBAL  double		vector_growth_factor;
 GLOBAL  double 		Xthreshold;
 GLOBAL  int		moves_per_growth_step;
 GLOBAL  int		growth_frequency;

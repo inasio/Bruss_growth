@@ -1,0 +1,28 @@
+Dx  0.005
+Dy  0.1
+a  0.01
+b  1.5
+c  1.8
+d  0.07
+initA  5
+B  1
+Xth  0.035
+radius  1
+delta_t  0.1
+endtime  10000
+pic_freq  500
+Area_Growth 0.0125
+growth_frequency 10
+growth_onset 100
+random_seed 237
+Init_pattern 1
+x_stretch 1
+z_stretch 1
+triangulation  C:\Wingrowth\WinGrowthCode\bin\Debug\disk_triangulate\1141_points
+old_result_dir  
+new_result_dir  C:\Wingrowth\WinGrowthCode\bin\Debug\Results3
+# Run on host 'HOSTNAME'
+# on Thu Sep 23 10:08:26 2004
+
+# with command
+# C:\Wingrowth\WinGrowthCode\bin\Debug\numcrunch.exe C:\Wingrowth\WinGrowthCode\bin\Debug\5whorl.num 

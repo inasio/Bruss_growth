@@ -29,7 +29,7 @@ export SRD_refinement_freq=10
 export SRD_pickuprun=0
 export SRD_undumpfilename=dump192
 
-../disk_triangulate/triangulate 10 >! ../disk_triangulate/T10
+../disk_triangulate/triangulate 20 >! ../disk_triangulate/T20
 
 mkdir res091071
 make

@@ -6,15 +6,37 @@ from mayavi.mlab import surf, axes
 # *** start ipython as ipython --gui=wx ***
 
 # nonlinear function definitions   
-def F_bruss(X,Y):
-	return a - b*X + X**2*Y - X
-def G_bruss(X,Y):
-	return b*X - X**2*Y
-# explicit RHS with 2nd order Neumann boundary conditions
-def XY_stationary_explicit(y,t=0):
+def diffusion_stationary_explicit(y, t, *args):
+	"""Solve explicitly a 1D diffusion equation"""
+	N = args[0]
+	H = args[1]
+	L = args[2]
+	
+	dxdt = zeros(N)
+	cx = 1./(L*H)**2
+	xx = y[:N]
 
-	print a
-	print b
+	dxdt[0] = 2*cx*(xx[1] - xx[0])
+	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1])
+
+	for i in range(1,N-1):
+		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1])
+		
+	return dxdt
+
+
+# explicit RHS with 2nd order Neumann boundary conditions
+def XY_stationary_explicit(y,t, *args):
+	F_func = args[0]
+	G_func = args[1]
+	a = args[2]
+	b = args[3]
+	Dx = args[4]
+	Dy = args[5]
+	
+	N = args[6]
+	H = args[7]
+	L = args[8]
 	
 	dxydt = zeros(2*N)
 	xx = y[:N]
@@ -27,15 +49,15 @@ def XY_stationary_explicit(y,t=0):
 	dxdt = zeros((N,1))
 	dydt = zeros((N,1))
 
-	dxdt[0] = cx*(xx[1] - xx[0]) + F_bruss(xx[0],yy[0])
-	dxdt[N-1] = cx*(xx[N-2] - xx[N-1]) + F_bruss(xx[N-1],yy[N-1])
+	dxdt[0] = 2*cx*(xx[1] - xx[0]) + F_func(xx[0], yy[0], a, b)
+	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1]) + F_func(xx[N-1], yy[N-1], a, b)
 
-	dydt[0] = cy*(yy[2] - yy[1]) + G_bruss(xx[1],yy[1])
-	dydt[N-1] = cy*(yy[N-2] - yy[N-1]) + G_bruss(xx[N-1],yy[N-1])
+	dydt[0] = 2*cy*(yy[2] - yy[1]) + G_func(xx[1], yy[1], b)
+	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + G_func(xx[N-1], yy[N-1], b)
 
 	for i in range(1,N-1):
-		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1]) + F_bruss(xx[i],yy[i])
-		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_bruss(xx[i],yy[i])
+		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1]) + F_func(xx[i], yy[i], a, b)
+		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_func(xx[i], yy[i], b)
 	
 	for i in range(N):
 		dxydt[i] = dxdt[i]
@@ -44,6 +66,11 @@ def XY_stationary_explicit(y,t=0):
 	return dxydt
 
 if __name__=="__main__":
+	
+	def F_bruss(X, Y, a, b):
+		return a - b*X + X**2*Y - X
+	def G_bruss(X, Y, b):
+		return b*X - X**2*Y
 	
 	N = 100
 	L = 1.0 # length of the domain
@@ -93,8 +120,9 @@ if __name__=="__main__":
 	XY_0 = zeros(2*N)
 	XY_0[:N] = (cos(2*pi*x) + 1 + 0.01*random.randn(N))*X_homog/1.5 + 1.5;
 	XY_0[N:] = (1 - cos(2*pi*x) + 0.01*random.randn(N))*Y_homog/6 + 1;
-
-	bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps);
+	
+	args = (F_bruss, G_bruss, a, b, Dx, Dy, N, H, L)
+	bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps, args);
 	#XX0 = XY(:,1:N);
 	#YY0 = XY(:,N+1:2*N);
 	figure(2)

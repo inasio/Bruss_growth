@@ -1,6 +1,7 @@
 from numpy import sin, cos, sqrt, zeros, random, arange, pi
 from scipy import integrate
 import pylab as pb
+# old system that is still dimensionalized (too many constants)
 
 # nonlinear function definitions   
 def F_bruss(X,Y,a,b,c,d):

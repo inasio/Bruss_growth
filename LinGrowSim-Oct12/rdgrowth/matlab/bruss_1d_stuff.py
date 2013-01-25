@@ -5,7 +5,63 @@ from mayavi.mlab import surf, axes
 
 # *** start ipython as ipython --gui=wx ***
 
-# nonlinear function definitions   
+# finite difference discretizations for various systems   
+def XY_stationary_explicit(y, t, *args):
+	"""Solve explicitly a 1D coupled system of two Brusselators"""
+	N = args[0]
+	H1 = args[1]
+	L1 = args[2]
+	a1 = args[3]
+	b1 = args[4]
+	H2 = args[5]
+	L2 = args[6]
+	a2 = args[7]
+	b2 = args[8]
+	n1 = args[9]
+	E = args[10]
+
+	dxydt = zeros(4*N)
+	xx1 = y[:N]
+	yy1 = y[N:2*N]
+	xx2 = y[2*N:3*N]
+	yy2 = y[3*N:4*N]
+
+	cx1 = Dx/(2*L1*H1)**2
+	cy1 = cx1*Dy/Dx
+	cx2 = Dx/(2*L2*H2)**2
+	cy2 = cx2*Dy/Dx
+
+	dx1dt = zeros((N,1))
+	dy1dt = zeros((N,1))
+	dx2dt = zeros((N,1))
+	dy2dt = zeros((N,1))
+
+	dx1dt[0] = 2*cx1*(xx1[1] - xx1[0]) + F_bruss1(xx1[0], yy1[0], a1, b1)
+	dx1dt[N-1] = 2*cx1*(xx1[N-2] - xx1[N-1]) + F_bruss1(xx1[N-1], yy1[N-1], a1, b1)
+
+	dy1dt[0] = 2*cy1*(yy1[1] - yy1[0]) + G_bruss1(xx1[0], yy1[0], b1)
+	dy1dt[N-1] = 2*cy1*(yy1[N-2] - yy1[N-1]) + G_bruss1(xx1[N-1], yy1[N-1], b1)
+	
+	dx2dt[0] = 2*cx2*(xx2[1] - xx2[0]) + F_bruss2(xx2[0], yy2[0], yy1[0], a2, n1, E)
+	dx2dt[N-1] = 2*cx2*(xx2[N-2] - xx2[N-1]) + F_bruss2(xx2[N-1], yy2[N-1], yy1[N-1], a2, n1, E)
+
+	dy2dt[0] = 2*cy2*(yy2[1] - yy2[0]) + G_bruss2(xx2[1], yy2[0], yy1[0], n1, E)
+	dy2dt[N-1] = 2*cy2*(yy2[N-2] - yy2[N-1]) + G_bruss2(xx2[N-1], yy2[N-1], yy1[N-1], n1, E)
+
+	for i in range(1,N-1):
+		dx1dt[i] = cx1*(xx1[i-1]-2*xx1[i]+xx1[i+1]) + F_bruss1(xx1[i], yy1[i], a1, b1)
+		dy1dt[i] = cy1*(yy1[i-1]-2*yy1[i]+yy1[i+1]) + G_bruss1(xx1[i], yy1[i], b1)
+		dx2dt[i] = cx2*(xx2[i-1]-2*xx2[i]+xx2[i+1]) + F_bruss2(xx2[i], yy2[i], yy1[i], a2, n1, E)
+		dy2dt[i] = cy2*(yy2[i-1]-2*yy2[i]+yy2[i+1]) + G_bruss2(xx2[i], yy2[i], yy1[i], n1, E)
+		
+	for i in range(N):
+		dxydt[i] = dx1dt[i]
+		dxydt[N+i] = dy1dt[i]
+		dxydt[2*N+i] = dx2dt[i]
+		dxydt[3*N+i] = dy2dt[i]
+
+	return dxydt
+
 def diffusion_stationary_explicit(y, t, *args):
 	"""Solve explicitly a 1D diffusion equation"""
 	N = args[0]
@@ -24,9 +80,8 @@ def diffusion_stationary_explicit(y, t, *args):
 		
 	return dxdt
 
-
-# explicit RHS with 2nd order Neumann boundary conditions
 def XY_stationary_explicit(y,t, *args):
+	""" explicit RHS with 2nd order Neumann boundary conditions"""
 	F_func = args[0]
 	G_func = args[1]
 	a = args[2]

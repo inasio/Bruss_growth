@@ -1,4 +1,4 @@
-from numpy import sin, cos, sqrt, zeros, random, arange, pi
+from numpy import sin, cos, sqrt, zeros, random, arange, pi, savez, load
 from scipy import integrate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
@@ -62,6 +62,14 @@ XY_0[N:] = (1 - cos(2*pi*x) + 0.01*random.randn(N))*Y_homog/6 + 1;
 
 args = (F_bruss, G_bruss, a, b, Dx, Dy, N, H, L)
 bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps, args);
+
+# saving and loading stuff
+savez('bruss_adim_files',bla=bla, Tsteps=Tsteps, x=x)
+test_save = load('bruss_adim_files.npz')
+
+x = test_save['x']
+bla = test_save['bla']
+Tsteps = test_save['Tsteps']
 
 figure(2)
 for i in range(0,len(bla),len(bla)/20):

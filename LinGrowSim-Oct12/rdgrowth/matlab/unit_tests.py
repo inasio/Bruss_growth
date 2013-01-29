@@ -59,12 +59,7 @@ def eigenvalue_test():
 	Lap[:N, N:] = dgdu
 	print Lap.todense()
 	
-		
-if __name__=="__main__":
-	
-	#convergence_test()
-	#eigenvalue_test()
-	
+def Jacobian_test():
 	def f_func(u,v):
 		return u**2*v
 	def g_func(u,v):
@@ -108,4 +103,12 @@ if __name__=="__main__":
 	
 	plot(x,dgdu,x,dgdu_num); show()
 	
-	print Lap
+		
+if __name__=="__main__":
+	
+	#convergence_test()
+	#eigenvalue_test()
+	Jacobian_test()
+	
+	
+	#print Lap

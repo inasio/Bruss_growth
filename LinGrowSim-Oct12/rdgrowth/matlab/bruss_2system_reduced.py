@@ -2,16 +2,14 @@ from numpy import sin, cos, sqrt, zeros, random, arange, pi, savez, load
 from scipy import integrate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
-from bruss_1d_stuff import XY_stationary_explicit
+from bruss_1d_stuff import XY2_stationary_explicit
 
 # *** start ipython as ipython --gui=wx ***
 
-def F_bruss(X, Y, args):
-	a = args[0]
-	b = args[1]
+def F_bruss(X, Y, a, b):
 	return a - b*X + X**2*Y - X
-def G_bruss(X, Y, args):
-	b = args[0]
+def G_bruss2(X, Y, Y1, n1, E):
+	b = n1*Y1/(Y1 + E)
 	return b*X - X**2*Y
 
 N = 100
@@ -48,13 +46,6 @@ condition_d = -K_1p
 condition_e = K_1p - 4*sqrt(n)/(n+1)
 condition_f = -1./K_1p
 
-#figure(1)
-#plot(K_1p,condition_a,K_1p,condition_b,K_1p,condition_c,K_1p, \
-#condition_d, K_1p,condition_e,K_1p,condition_f)
-#axis([0,1.2,-7,0])
-#plot(k_1p,k_4p,'*')
-#show()
-
 # initial conditions
 X_homog = a
 Y_homog = b/a
@@ -63,9 +54,7 @@ XY_0 = zeros(2*N)
 XY_0[:N] = (cos(2*pi*x) + 1 + 0.01*random.randn(N))*X_homog/1.5 + 1.5;
 XY_0[N:] = (1 - cos(2*pi*x) + 0.01*random.randn(N))*Y_homog/6 + 1;
 
-F_params = [F_bruss, [a, b]]
-G_params = [G_bruss, [b]]
-args = (F_params, G_params, Dx, Dy, N, H, L)
+args = (F_bruss, G_bruss2, a, b, Dx, Dy, N, H, L)
 bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps, args);
 
 # saving and loading stuff

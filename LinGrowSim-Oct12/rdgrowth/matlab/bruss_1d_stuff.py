@@ -6,19 +6,28 @@ from mayavi.mlab import surf, axes
 # *** start ipython as ipython --gui=wx ***
 
 # finite difference discretizations for various systems   
-def XY_stationary_explicit(y, t, *args):
+def XY2_stationary_explicit(y, t, *args):
 	"""Solve explicitly a 1D coupled system of two Brusselators"""
-	N = args[0]
-	H1 = args[1]
-	L1 = args[2]
-	a1 = args[3]
-	b1 = args[4]
+	Dx = args[0]
+	Dy = args[1]
+	N = args[2]
+	H1 = args[3]
+	L1 = args[4]
 	H2 = args[5]
 	L2 = args[6]
-	a2 = args[7]
-	b2 = args[8]
-	n1 = args[9]
-	E = args[10]
+	
+	F1_params = args[7]
+	G1_params = args[8]
+	F2_params = args[9]
+	G2_params = args[10]
+	F1_func = F1_params[0]
+	args_f1 = F1_params[1]
+	G1_func = G1_params[0]
+	args_g1 = G1_params[1]
+	F2_func = F2_params[0]
+	args_f2 = F2_params[1]
+	G2_func = G2_params[0]
+	args_g2 = G2_params[1]
 
 	dxydt = zeros(4*N)
 	xx1 = y[:N]
@@ -36,23 +45,23 @@ def XY_stationary_explicit(y, t, *args):
 	dx2dt = zeros((N,1))
 	dy2dt = zeros((N,1))
 
-	dx1dt[0] = 2*cx1*(xx1[1] - xx1[0]) + F_bruss1(xx1[0], yy1[0], a1, b1)
-	dx1dt[N-1] = 2*cx1*(xx1[N-2] - xx1[N-1]) + F_bruss1(xx1[N-1], yy1[N-1], a1, b1)
+	dx1dt[0] = 2*cx1*(xx1[1] - xx1[0]) + F1_func(xx1[0], yy1[0], args_f1)
+	dx1dt[N-1] = 2*cx1*(xx1[N-2] - xx1[N-1]) + F1_func(xx1[N-1], yy1[N-1], args_f1)
 
-	dy1dt[0] = 2*cy1*(yy1[1] - yy1[0]) + G_bruss1(xx1[0], yy1[0], b1)
-	dy1dt[N-1] = 2*cy1*(yy1[N-2] - yy1[N-1]) + G_bruss1(xx1[N-1], yy1[N-1], b1)
+	dy1dt[0] = 2*cy1*(yy1[1] - yy1[0]) + G1_func(xx1[0], yy1[0], args_g1)
+	dy1dt[N-1] = 2*cy1*(yy1[N-2] - yy1[N-1]) + G1_func(xx1[N-1], yy1[N-1], args_g1)
 	
-	dx2dt[0] = 2*cx2*(xx2[1] - xx2[0]) + F_bruss2(xx2[0], yy2[0], yy1[0], a2, n1, E)
-	dx2dt[N-1] = 2*cx2*(xx2[N-2] - xx2[N-1]) + F_bruss2(xx2[N-1], yy2[N-1], yy1[N-1], a2, n1, E)
+	dx2dt[0] = 2*cx2*(xx2[1] - xx2[0]) + F2_func(xx2[0], yy2[0], [yy1[0]]+args_f2)
+	dx2dt[N-1] = 2*cx2*(xx2[N-2] - xx2[N-1]) + F2_func(xx2[N-1], yy2[N-1], [yy1[N-1]]+args_f2)
 
-	dy2dt[0] = 2*cy2*(yy2[1] - yy2[0]) + G_bruss2(xx2[1], yy2[0], yy1[0], n1, E)
-	dy2dt[N-1] = 2*cy2*(yy2[N-2] - yy2[N-1]) + G_bruss2(xx2[N-1], yy2[N-1], yy1[N-1], n1, E)
+	dy2dt[0] = 2*cy2*(yy2[1] - yy2[0]) + G2_func(xx2[1], yy2[0], [yy1[0]]+args_g2)
+	dy2dt[N-1] = 2*cy2*(yy2[N-2] - yy2[N-1]) + G2_func(xx2[N-1], yy2[N-1], [yy1[N-1]]+args_g2)
 
 	for i in range(1,N-1):
-		dx1dt[i] = cx1*(xx1[i-1]-2*xx1[i]+xx1[i+1]) + F_bruss1(xx1[i], yy1[i], a1, b1)
-		dy1dt[i] = cy1*(yy1[i-1]-2*yy1[i]+yy1[i+1]) + G_bruss1(xx1[i], yy1[i], b1)
-		dx2dt[i] = cx2*(xx2[i-1]-2*xx2[i]+xx2[i+1]) + F_bruss2(xx2[i], yy2[i], yy1[i], a2, n1, E)
-		dy2dt[i] = cy2*(yy2[i-1]-2*yy2[i]+yy2[i+1]) + G_bruss2(xx2[i], yy2[i], yy1[i], n1, E)
+		dx1dt[i] = cx1*(xx1[i-1]-2*xx1[i]+xx1[i+1]) + F1_func(xx1[i], yy1[i], args_f1)
+		dy1dt[i] = cy1*(yy1[i-1]-2*yy1[i]+yy1[i+1]) + G1_func(xx1[i], yy1[i], args_g1)
+		dx2dt[i] = cx2*(xx2[i-1]-2*xx2[i]+xx2[i+1]) + F2_func(xx2[i], yy2[i], [yy1[i]]+args_f2)
+		dy2dt[i] = cy2*(yy2[i-1]-2*yy2[i]+yy2[i+1]) + G2_func(xx2[i], yy2[i], [yy1[i]]+args_g2)
 		
 	for i in range(N):
 		dxydt[i] = dx1dt[i]
@@ -82,16 +91,19 @@ def diffusion_stationary_explicit(y, t, *args):
 
 def XY_stationary_explicit(y,t, *args):
 	""" explicit RHS with 2nd order Neumann boundary conditions"""
-	F_func = args[0]
-	G_func = args[1]
-	a = args[2]
-	b = args[3]
-	Dx = args[4]
-	Dy = args[5]
+	F_params = args[0]
+	G_params = args[1]
+	F_func = F_params[0]
+	args_f = F_params[1]
+	G_func = G_params[0]
+	args_g = G_params[1]
+
+	Dx = args[2]
+	Dy = args[3]
 	
-	N = args[6]
-	H = args[7]
-	L = args[8]
+	N = args[4]
+	H = args[5]
+	L = args[6]
 	
 	dxydt = zeros(2*N)
 	xx = y[:N]
@@ -104,15 +116,15 @@ def XY_stationary_explicit(y,t, *args):
 	dxdt = zeros((N,1))
 	dydt = zeros((N,1))
 
-	dxdt[0] = 2*cx*(xx[1] - xx[0]) + F_func(xx[0], yy[0], a, b)
-	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1]) + F_func(xx[N-1], yy[N-1], a, b)
+	dxdt[0] = 2*cx*(xx[1] - xx[0]) + F_func(xx[0], yy[0], args_f)
+	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1]) + F_func(xx[N-1], yy[N-1], args_f)
 
-	dydt[0] = 2*cy*(yy[2] - yy[1]) + G_func(xx[1], yy[1], b)
-	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + G_func(xx[N-1], yy[N-1], b)
+	dydt[0] = 2*cy*(yy[2] - yy[1]) + G_func(xx[1], yy[1], args_g)
+	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + G_func(xx[N-1], yy[N-1], args_g)
 
 	for i in range(1,N-1):
-		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1]) + F_func(xx[i], yy[i], a, b)
-		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_func(xx[i], yy[i], b)
+		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1]) + F_func(xx[i], yy[i], args_f)
+		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_func(xx[i], yy[i], args_g)
 	
 	for i in range(N):
 		dxydt[i] = dxdt[i]

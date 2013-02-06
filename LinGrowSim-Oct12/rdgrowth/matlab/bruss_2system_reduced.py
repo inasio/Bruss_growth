@@ -1,21 +1,32 @@
 from numpy import sin, cos, sqrt, zeros, random, arange, pi, savez, load
-from scipy import integrate
+from scipy import integrate, interpolate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
-from bruss_1d_stuff import XY2_stationary_explicit
+from bruss_1d_stuff import XY_stationary_explicit_extended
+from time import time
 
 # *** start ipython as ipython --gui=wx ***
 
-def F_bruss(X, Y, a, b):
+def F_bruss(X, Y, args):
+	a = args[0]
+	b = args[1]
 	return a - b*X + X**2*Y - X
-def G_bruss2(X, Y, Y1, n1, E):
-	b = n1*Y1/(Y1 + E)
+def G_bruss(X, Y, args):
+	b = args[0]
+	return b*X - X**2*Y
+def G_bruss_ext(X, Y, args):
+	Y1 = args[0]
+	n1 = args[1]
+	E = args[2]
+	#b = n1*Y1/(Y1 + E)
+	b = 10
 	return b*X - X**2*Y
 
+clock_start = time()
 N = 100
 L = 1.0 # length of the domain
 H = 2*L/(N-1) # N grid points 
-x = arange(-L,L+H,H)
+x = arange(-L,L+1e-6,H)
 
 Tend = 20. # integration time
 Dt = .05 # time step size, arbitrary for nonlinear problems
@@ -28,34 +39,36 @@ Dy = Dx*n
 a = 8.
 b = 10.
 
-# Lacalli parameters
-k_1 = b - 1;
-k_2 = a**2
-k_3 = -b
-k_4 = -a**2
-k_cr = sqrt(-k_2*k_3)
-k_1p = k_1/k_cr
-k_4p = k_4/k_cr
-
-# Lacalli-Turing plot
-K_1p = arange(0.1,2,0.01)
-condition_a = n*K_1p - 2*sqrt(n)
-condition_b = K_1p - (n+1)/sqrt(n)
-condition_c = K_1p - 2
-condition_d = -K_1p
-condition_e = K_1p - 4*sqrt(n)/(n+1)
-condition_f = -1./K_1p
+n1 = 15.
+E = 2.
 
 # initial conditions
-X_homog = a
-Y_homog = b/a
 
 XY_0 = zeros(2*N)
-XY_0[:N] = (cos(2*pi*x) + 1 + 0.01*random.randn(N))*X_homog/1.5 + 1.5;
-XY_0[N:] = (1 - cos(2*pi*x) + 0.01*random.randn(N))*Y_homog/6 + 1;
+filenum_init = '0030'
+init_conditions = load('data/bruss_adim_files_'+filenum_init+'.npz')
+XY_0_init = init_conditions['bla'][-1,:]
+x_init = init_conditions['x']
+x_init = x_init*x[-1]/x_init[-1]		#rescaling in case L_init <> L
+XY_0[:N] = interpolate.interp1d(x_init, XY_0_init[:len(x_init)], bounds_error=False, fill_value=0., kind='cubic')(x)
+XY_0[N:] = interpolate.interp1d(x_init, XY_0_init[len(x_init):], bounds_error=False, fill_value=0., kind='cubic')(x)
 
-args = (F_bruss, G_bruss2, a, b, Dx, Dy, N, H, L)
-bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps, args);
+filenum_GM2 = '0059'
+GM2_data = load('data/bruss_adim_files_'+filenum_GM2+'.npz')
+x_GM2 = GM2_data['x']
+Y_GM2 = GM2_data['bla'][-1,len(x_GM2):]
+x_GM2 = x_GM2*x[-1]/x_GM2[-1]		#rescaling in case L_init <> L
+Y2 = interpolate.interp1d(x_GM2, Y_GM2[:len(x_GM2)], bounds_error=False, fill_value=0., kind='cubic')(x)
+
+F_params = [F_bruss, [a, b]]
+#G_params = [G_bruss, [b]]
+G_params = [G_bruss_ext, [Y2, n1, E]]
+args = (F_params, G_params, Dx, Dy, N, H, L)
+
+clock_pre_integration = time()
+bla = integrate.odeint(XY_stationary_explicit_extended, XY_0, Tsteps, args);
+clock_integration = time() - clock_pre_integration
+clock_total = time() - clock_start
 
 # saving and loading stuff
 savez('bruss_adim_files',bla=bla, Tsteps=Tsteps, x=x)
@@ -71,5 +84,9 @@ for i in range(0,len(bla),len(bla)/20):
 
 Tsteps_plot = range(0,len(Tsteps),int(len(Tsteps)/N))
 #figure(3)
-three_d = surf(Tsteps[Tsteps_plot], x, bla[Tsteps_plot,:N],extent=[0,2,0,1,0,1])
+three_d = surf(Tsteps[Tsteps_plot], x, bla[Tsteps_plot,N:],extent=[0,2,0,1,0,1])
+
+print 't_load = ',clock_pre_integration
+print 't_num = ',clock_integration
+print 't_total = ', clock_total
 show()

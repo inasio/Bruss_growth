@@ -3,6 +3,7 @@ from scipy import integrate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
 from bruss_1d_stuff import XY_stationary_explicit
+from time import time
 
 # *** start ipython as ipython --gui=wx ***
 
@@ -14,6 +15,7 @@ def G_bruss(X, Y, args):
 	b = args[0]
 	return b*X - X**2*Y
 
+clock_start = time()
 N = 100
 L = 1.0 # length of the domain
 H = 2*L/(N-1) # N grid points 
@@ -66,7 +68,11 @@ XY_0[N:] = (1 - cos(2*pi*x) + 0.01*random.randn(N))*Y_homog/6 + 1;
 F_params = [F_bruss, [a, b]]
 G_params = [G_bruss, [b]]
 args = (F_params, G_params, Dx, Dy, N, H, L)
+
+clock_pre_integration = time()
 bla = integrate.odeint(XY_stationary_explicit, XY_0, Tsteps, args);
+clock_integration = time() - clock_pre_integration
+clock_total = time() - clock_start
 
 # saving and loading stuff
 savez('bruss_adim_files',bla=bla, Tsteps=Tsteps, x=x)
@@ -84,3 +90,7 @@ Tsteps_plot = range(0,len(Tsteps),int(len(Tsteps)/N))
 #figure(3)
 three_d = surf(Tsteps[Tsteps_plot], x, bla[Tsteps_plot,:N],extent=[0,2,0,1,0,1])
 show()
+print 't_load = ', clock_pre_integration
+print 't_num = ', clock_integration
+print 't_total = ', clock_total
+

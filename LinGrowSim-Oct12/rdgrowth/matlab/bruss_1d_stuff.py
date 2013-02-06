@@ -2,6 +2,7 @@ from numpy import sin, cos, sqrt, zeros, random, arange, pi
 from scipy import integrate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
+from scipy import weave
 
 # *** start ipython as ipython --gui=wx ***
 
@@ -20,6 +21,7 @@ def XY2_stationary_explicit(y, t, *args):
 	G1_params = args[8]
 	F2_params = args[9]
 	G2_params = args[10]
+	
 	F1_func = F1_params[0]
 	args_f1 = F1_params[1]
 	G1_func = G1_params[0]
@@ -40,28 +42,41 @@ def XY2_stationary_explicit(y, t, *args):
 	cx2 = Dx/(2*L2*H2)**2
 	cy2 = cx2*Dy/Dx
 
-	dx1dt = zeros((N,1))
-	dy1dt = zeros((N,1))
-	dx2dt = zeros((N,1))
-	dy2dt = zeros((N,1))
-
-	dx1dt[0] = 2*cx1*(xx1[1] - xx1[0]) + F1_func(xx1[0], yy1[0], args_f1)
-	dx1dt[N-1] = 2*cx1*(xx1[N-2] - xx1[N-1]) + F1_func(xx1[N-1], yy1[N-1], args_f1)
-
-	dy1dt[0] = 2*cy1*(yy1[1] - yy1[0]) + G1_func(xx1[0], yy1[0], args_g1)
-	dy1dt[N-1] = 2*cy1*(yy1[N-2] - yy1[N-1]) + G1_func(xx1[N-1], yy1[N-1], args_g1)
+	dx1dt = zeros(N)
+	dy1dt = zeros(N)
+	dx2dt = zeros(N)
+	dy2dt = zeros(N)
 	
-	dx2dt[0] = 2*cx2*(xx2[1] - xx2[0]) + F2_func(xx2[0], yy2[0], [yy1[0]]+args_f2)
-	dx2dt[N-1] = 2*cx2*(xx2[N-2] - xx2[N-1]) + F2_func(xx2[N-1], yy2[N-1], [yy1[N-1]]+args_f2)
+	RHS_x1 = zeros(N)
+	RHS_y1 = zeros(N)
+	RHS_x2 = zeros(N)
+	RHS_y2 = zeros(N)
+	
+	RHS_x1 = F1_func(xx1, yy1, args_f1)
+	RHS_y1 = G1_func(xx1, yy1, args_g1)
+	RHS_x2 = F2_func(xx2, yy2, [yy1]+args_f2)
+	RHS_y2 = G2_func(xx2, yy2, [yy1]+args_g2)
 
-	dy2dt[0] = 2*cy2*(yy2[1] - yy2[0]) + G2_func(xx2[1], yy2[0], [yy1[0]]+args_g2)
-	dy2dt[N-1] = 2*cy2*(yy2[N-2] - yy2[N-1]) + G2_func(xx2[N-1], yy2[N-1], [yy1[N-1]]+args_g2)
+	dx1dt[0] = 2*cx1*(xx1[1] - xx1[0]) + RHS_x1[0]
+	dx1dt[N-1] = 2*cx1*(xx1[N-2] - xx1[N-1]) + RHS_x1[N-1]
 
-	for i in range(1,N-1):
-		dx1dt[i] = cx1*(xx1[i-1]-2*xx1[i]+xx1[i+1]) + F1_func(xx1[i], yy1[i], args_f1)
-		dy1dt[i] = cy1*(yy1[i-1]-2*yy1[i]+yy1[i+1]) + G1_func(xx1[i], yy1[i], args_g1)
-		dx2dt[i] = cx2*(xx2[i-1]-2*xx2[i]+xx2[i+1]) + F2_func(xx2[i], yy2[i], [yy1[i]]+args_f2)
-		dy2dt[i] = cy2*(yy2[i-1]-2*yy2[i]+yy2[i+1]) + G2_func(xx2[i], yy2[i], [yy1[i]]+args_g2)
+	dy1dt[0] = 2*cy1*(yy1[1] - yy1[0]) + RHS_y1[0]
+	dy1dt[N-1] = 2*cy1*(yy1[N-2] - yy1[N-1]) + RHS_y1[N-1]
+	
+	dx2dt[0] = 2*cx2*(xx2[1] - xx2[0]) + RHS_x2[0]
+	dx2dt[N-1] = 2*cx2*(xx2[N-2] - xx2[N-1]) + RHS_x2[N-1]
+
+	dy2dt[0] = 2*cy2*(yy2[1] - yy2[0]) + RHS_y2[0]
+	dy2dt[N-1] = 2*cy2*(yy2[N-2] - yy2[N-1]) + RHS_y2[N-1]	
+		
+	expr1 = "dx1dt[1:N-1] = cx1*(xx1[:N-2]-2*xx1[1:N-1]+xx1[2:N]) + RHS_x1[1:N-1]"
+	expr2 = "dy1dt[1:N-1] = cy1*(yy1[:N-2]-2*yy1[1:N-1]+yy1[2:N]) + RHS_y1[1:N-1]"
+	expr3 = "dx2dt[1:N-1] = cx2*(xx2[:N-2]-2*xx2[1:N-1]+xx2[2:N]) + RHS_x2[1:N-1]"
+	expr4 = "dy2dt[1:N-1] = cy2*(yy2[:N-2]-2*yy2[1:N-1]+yy2[2:N]) + RHS_y2[1:N-1]"
+	weave.blitz(expr1, check_size=0)
+	weave.blitz(expr2, check_size=0)
+	weave.blitz(expr3, check_size=0)
+	weave.blitz(expr4, check_size=0)
 		
 	for i in range(N):
 		dxydt[i] = dx1dt[i]
@@ -90,7 +105,9 @@ def diffusion_stationary_explicit(y, t, *args):
 	return dxdt
 
 def XY_stationary_explicit(y,t, *args):
-	""" explicit RHS with 2nd order Neumann boundary conditions"""
+	""" explicit RHS with 2nd order Neumann boundary conditions
+	fast version using weave"""
+	
 	F_params = args[0]
 	G_params = args[1]
 	F_func = F_params[0]
@@ -113,18 +130,68 @@ def XY_stationary_explicit(y,t, *args):
 	cx = Dx/(L2*H**2)
 	cy = Dy/(L2*H**2)
 
+	dxdt = zeros(N)
+	dydt = zeros(N)
+	RHS_x = zeros(N)
+	RHS_y = zeros(N)
+	
+	RHS_x = F_func(xx, yy, args_f)
+	RHS_y = G_func(xx, yy, args_g)
+
+	dxdt[0] = 2*cx*(xx[1] - xx[0]) + RHS_x[0]
+	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1]) + RHS_x[N-1]
+
+	dydt[0] = 2*cy*(yy[1] - yy[0]) + RHS_y[0]
+	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + RHS_y[N-1]
+	
+	expr1 = "dxdt[1:N-1] = cx*(xx[:N-2]-2*xx[1:N-1]+xx[2:]) + RHS_x[1:N-1]"
+	expr2 = "dydt[1:N-1] = cy*(yy[:N-2]-2*yy[1:N-1]+yy[2:]) + RHS_y[1:N-1]"
+	weave.blitz(expr1, check_size=0)
+	weave.blitz(expr2, check_size=0)
+
+	for i in range(N):
+		dxydt[i] = dxdt[i]
+		dxydt[N+i] = dydt[i]
+
+	return dxydt
+
+def XY_stationary_explicit_extended(y,t, *args):
+	""" explicit RHS with 2nd order Neumann boundary conditions"""
+	F_params = args[0]
+	G_params = args[1]
+	F_func = F_params[0]
+	args_f = F_params[1]
+	G_func = G_params[0]
+	Y2 = G_params[1][0]
+	args_g = G_params[1][1:]
+
+	Dx = args[2]
+	Dy = args[3]
+	
+	N = args[4]
+	H = args[5]
+	L = args[6]
+	
+	dxydt = zeros(2*N)
+	xx = y[:N]
+	yy = y[N:]
+
+	L2 = (2*L)**2
+	cx = Dx/(L2*H**2)
+	cy = Dy/(L2*H**2)
+
 	dxdt = zeros((N,1))
 	dydt = zeros((N,1))
 
 	dxdt[0] = 2*cx*(xx[1] - xx[0]) + F_func(xx[0], yy[0], args_f)
 	dxdt[N-1] = 2*cx*(xx[N-2] - xx[N-1]) + F_func(xx[N-1], yy[N-1], args_f)
 
-	dydt[0] = 2*cy*(yy[2] - yy[1]) + G_func(xx[1], yy[1], args_g)
-	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + G_func(xx[N-1], yy[N-1], args_g)
+	dydt[0] = 2*cy*(yy[1] - yy[0]) + G_func(xx[0], yy[0], [Y2[0]]+args_g)
+	dydt[N-1] = 2*cy*(yy[N-2] - yy[N-1]) + G_func(xx[N-1], yy[N-1], [Y2[N-1]]+args_g)
 
 	for i in range(1,N-1):
 		dxdt[i] = cx*(xx[i-1]-2*xx[i]+xx[i+1]) + F_func(xx[i], yy[i], args_f)
-		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_func(xx[i], yy[i], args_g)
+		dydt[i] = cy*(yy[i-1]-2*yy[i]+yy[i+1]) + G_func(xx[i], yy[i], [Y2[i]]+args_g)
 	
 	for i in range(N):
 		dxydt[i] = dxdt[i]

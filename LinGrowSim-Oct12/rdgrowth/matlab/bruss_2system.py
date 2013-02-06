@@ -3,6 +3,7 @@ from scipy import integrate
 from pylab import figure, plot, show, axis, ceil
 from mayavi.mlab import surf, axes
 from bruss_1d_stuff import XY2_stationary_explicit
+from time import time
 
 # *** start ipython as ipython --gui=wx ***
 
@@ -29,6 +30,7 @@ def G_bruss2(X, Y, args):
 
 if __name__=="__main__":
 
+	clock_start = time()
 	N = 100
 	Tend = 40. # integration time
 	Dt = .05 # time step size, arbitrary for nonlinear problems
@@ -69,7 +71,11 @@ if __name__=="__main__":
 	XY_0[2*N:3*N] = (cos(2*pi*x2) + 1 + 0.01*random.randn(N))*X2_homog/1.8 + 1.5;
 	XY_0[3*N:4*N] = (1 - cos(2*pi*x2) + 0.01*random.randn(N))*Y2_homog/6 + 1;
 
+	clock_pre_integration = time()
 	bla = integrate.odeint(XY2_stationary_explicit, XY_0, Tsteps, args = ode_params);
+	clock_integration = time() - clock_pre_integration
+	clock_total = time() - clock_start
+	
 	#XX0 = XY(:,1:N);
 	#YY0 = XY(:,N+1:2*N);
 	figure(2)
@@ -82,4 +88,8 @@ if __name__=="__main__":
 	Tsteps_plot = range(0,len(Tsteps),int(len(Tsteps)/N))
 	#figure(3)
 	three_d = surf(Tsteps[Tsteps_plot], x1, bla[Tsteps_plot,2*N:3*N],extent=[0,2,0,1,0,1])
+	
+	print 't_load = '
+	print clock_pre_integration, 't_num = '
+	print clock_integration, 't_total = ', clock_total
 	show()
